@@ -12,7 +12,7 @@ The goal is to share reusable ideas — not just code — including performance 
 A performance-optimized version of a fact table pipeline implemented in Snowflake.
 
 **Key highlights:**
-- Use of append-only `STREAM`s for incremental change tracking
+- Use of append-only `STREAMs` for incremental change tracking
 - Use of deltas to detect changes on views, avoiding `STREAM` limitations
 - Early flattening of semi-structured data
 - Breaking down transformations into logical steps using temporary tables
