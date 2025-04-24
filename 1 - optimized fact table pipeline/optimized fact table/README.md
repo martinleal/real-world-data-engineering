@@ -5,13 +5,13 @@ This folder contains a refactored version of a fact table pipeline implemented i
 ## 🔧 Background
 
 The legacy pipeline had several limitations:
-- **No use of `STREAM`s**: It filtered source data using a fixed time window (`CURRENT_TIMESTAMP - 2 hours`), leading to unreliable and inflexible processing.
+- **No use of `STREAMs`**: It filtered source data using a fixed time window (`CURRENT_TIMESTAMP - 2 hours`), leading to unreliable and inflexible processing.
 - **Heavy workloads**: Complex computations led to remote spilling and high memory usage, impacting overall warehouse performance.
 - **Basic data checks**: The only validation ensured that deleted records didn't appear in the target table — missing full coverage for insertions or late-arriving data.
 
 ## ✅ Key Improvements
 
-- **Incremental processing with `STREAM`s**: Replaced time-window logic with Snowflake `STREAM`s for accurate, efficient change tracking.
+- **Incremental processing with `STREAMs`**: Replaced time-window logic with Snowflake `STREAMs` for accurate, efficient change tracking.
 - **Delta tracking system**: Detects changes in derived dimension data to ensure the fact table reflects the latest state.
 - **Structured transformations**: Broke logic into modular steps with temporary tables to reduce memory usage and improve debugging.
 - **Robust data validation**: Ensures every row from the source is accounted for in the destination, with logic to handle ingestion delays.
