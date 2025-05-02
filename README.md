@@ -1,4 +1,4 @@
-# real-world-data-engineering
+# real-world-data-pipelines
 
 This repository showcases practical, production-level data pipelines and transformations based on real-world experience, carefully adapted to preserve confidentiality.  
 
@@ -8,7 +8,7 @@ The goal is to share reusable ideas — not just code — including performance 
 
 ## Contents
 
-### 1. Optimized Fact Table Pipeline
+### 1. Optimized Fact Table ELT
 A performance-optimized version of a fact table pipeline implemented in Snowflake.
 
 **Key highlights:**
