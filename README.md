@@ -1,4 +1,4 @@
-# real-world-data-pipelines
+# real-world-data-engineering
 
 This repository showcases practical, production-level data pipelines and transformations based on real-world experience, carefully adapted to preserve confidentiality.  
 
