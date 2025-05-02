@@ -8,7 +8,7 @@ The goal is to share reusable ideas — not just code — including performance 
 
 ## Contents
 
-### 1. Optimized Fact Table ELT
+### 1. Optimized Fact Table Pipeline
 A performance-optimized version of a fact table pipeline implemented in Snowflake.
 
 **Key highlights:**
