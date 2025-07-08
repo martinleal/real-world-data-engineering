@@ -1,10 +1,10 @@
 # real-world-data-engineering
 
-This repository showcases practical, production-level data pipelines and transformations based on real-world experience, carefully adapted to preserve confidentiality.  
+This repository features practical, production-level data pipelines and transformations based on real-world scenarios.  
 
 Each example reflects optimizations, design patterns, and engineering decisions used in modern data platforms, particularly in Snowflake.
 
-The goal is to share reusable ideas — not just code — including performance improvements, modular design, and SQL/data warehouse best practices.
+The goal is to share reusable ideas, not just code, including performance improvements, modular design, and data warehousing best practices.
 
 ## Contents
 
