@@ -37,6 +37,23 @@
                                   |  - Health-related indicators      |
                                   +-----------------------------------+
 
+<pre> ```mermaid flowchart TD
+    A[OpenAQ API<br/>(Near-Real-Time Data)] --> B[Airflow DAG<br/>(nrt_air_quality)]
+    C[OpenAQ Public AWS S3 Bucket<br/>(Historical JSON files)] --> D[Airflow DAG<br/>(historical_ingest)]
+
+    B --> E[AWS S3 Bucket<br/>(Raw Landing Zone)]
+    D --> E
+
+    E --> F[Snowpipe auto-detection or trigger]
+
+    F --> G[Snowflake]
+    G --> G1[Bronze Layer (Raw Load)]
+    G --> G2[Silver Layer (Cleansed)]
+    G --> G3[Gold Layer (KPIs)]
+
+    G3 --> H[BI Layer<br/>(Power BI or Streamlit)]
+ ``` </pre>
+
 ## Project Milestones
 
 ### Phase 1: Setup & Core Infrastructure
