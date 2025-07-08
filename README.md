@@ -20,3 +20,13 @@ A performance-optimized version of a fact table pipeline implemented in Snowflak
 **Folder contains:**
 - `fact_table_deprecated_version/` – legacy version with performance issues
 - `optimized_fact_table/` – modular version with ~70% performance improvement
+
+### 2. Air Quality Health Project (In Progress)
+A data engineering project that integrates air pollution metrics with health-related signals to generate region-level indicators for environmental risk monitoring and analysis.
+
+**Key highlights:**
+- Combines batch and streaming pipelines using public and near-real-time data sources.
+- Ingests near-real-time API data, writes to S3, and loads into Snowflake using Snowpipe.
+- Loads historical data from a public AWS Open Data S3 bucket.
+- Applies Medallion Architecture and Star Schema modeling for scalable, analytics-ready datasets.
+- Implements data quality checks and orchestration through Airflow for reliability and observability.
