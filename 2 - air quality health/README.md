@@ -25,9 +25,11 @@
                                       +--------------------------+
                                       |        Snowflake         |
                                       |--------------------------|
-                                      | Bronze Layer (Raw Load)  |
-                                      | Silver Layer (Cleansed)  |
-                                      | Gold Layer (KPIs)        |
+                                      |       Bronze Layer       |
+                                      |            v             |
+                                      |       Silver Layer       |
+                                      |            v             |
+                                      |        Gold Layer        |
                                       +--------------------------+
                                                     |
                                                     v
@@ -37,22 +39,7 @@
                                   |  - Health-related indicators      |
                                   +-----------------------------------+
 
-<pre> ```mermaid flowchart TD
-    A[OpenAQ API<br/>(Near-Real-Time Data)] --> B[Airflow DAG<br/>(nrt_air_quality)]
-    C[OpenAQ Public AWS S3 Bucket<br/>(Historical JSON files)] --> D[Airflow DAG<br/>(historical_ingest)]
 
-    B --> E[AWS S3 Bucket<br/>(Raw Landing Zone)]
-    D --> E
-
-    E --> F[Snowpipe auto-detection or trigger]
-
-    F --> G[Snowflake]
-    G --> G1[Bronze Layer (Raw Load)]
-    G --> G2[Silver Layer (Cleansed)]
-    G --> G3[Gold Layer (KPIs)]
-
-    G3 --> H[BI Layer<br/>(Power BI or Streamlit)]
- ``` </pre>
 
 ## Project Milestones
 
@@ -62,80 +49,71 @@
 
  - Define project scope in README. ✅
 
- - Set up project repo structure (src/, dags/, models/, utils/, etc.)
+ - Set up project repo structure (src/, dags/, models/, utils/, etc.) ✅
 
  - Create Python virtual environment and requirements.txt
 
  - Create Airflow basic DAG structure
 
-- Set up AWS S3 bucket (with raw/, processed/ folders)
+ - Set up AWS S3 bucket (with raw/, processed/ folders)
 
-- Create Snowflake schema structure for bronze/silver/gold layers
+ - Create Snowflake schema structure for bronze/silver/gold layers
 
-- Set up Snowpipe for raw load from S3
+ - Set up Snowpipe for raw load from S3
 
 ### Phase 2: Near-Real-Time Pipeline (Days 6–12)
 
 **Goal: Show working E2E ingestion from API to Snowflake via Snowpipe.**
 
- Build Airflow DAG to call OpenAQ API and store data in S3 (JSON or Parquet)
+ - Build Airflow DAG to call OpenAQ API and store data in S3 (JSON or Parquet)
 
- Configure Snowpipe to detect new files and load raw table
+ - Configure Snowpipe to detect new files and load raw table
 
- Create bronze & silver transformations in SQL (initial cleaned data model)
+ - Create bronze & silver transformations in SQL (initial cleaned data model)
 
- Basic data quality checks in Airflow (e.g., row count, schema match)
+ - Basic data quality checks in Airflow (e.g., row count, schema match)
 
- Add minimal unit test coverage
+ - Add minimal unit test coverage
 
-📦 Phase 3: Historical Backfill Pipeline (Days 13–17)
-Goal: Add long-term reliability + allow DQ and completeness checks.
+### Phase 3: Historical Backfill Pipeline (Days 13–17)
+**Goal: Add long-term reliability + allow DQ and completeness checks.**
 
- Build Airflow DAG to pull from public OpenAQ S3 bucket
+ - Build Airflow DAG to pull from public OpenAQ S3 bucket
 
- Transform & load historical data into same bronze layer
+ - Transform & load historical data into same bronze layer
 
- Compare NRT vs historical to validate ingestion completeness
+ - Compare NRT vs historical to validate ingestion completeness
 
- Add logic to detect and fill gaps from historical files if needed
+ - Add logic to detect and fill gaps from historical files if needed
 
-🧠 Phase 4: Modeling & Analytics (Days 18–23)
-Goal: Build a clear star schema with useful indicators.
+### Phase 4: Modeling & Analytics (Days 18–23)
+**Goal: Build a clear star schema with useful indicators.**
 
- Model fact table for pollution events (region, time, pollutant, etc.)
+- Model fact table for pollution events (region, time, pollutant, etc.)
 
- Build dimension tables: region/location, time, pollutant type
+- Build dimension tables: region/location, time, pollutant type
 
- Define KPI layer in gold: average pollution, alerts, trends
+- Define KPI layer in gold: average pollution, alerts, trends
 
- Optionally: Add basic health-related indicator (e.g., daily alert flags)
+- Optionally: Add basic health-related indicator (e.g., daily alert flags)
 
-📊 Phase 5: Visualization Layer (Days 24–28)
-Goal: Show that your data pipeline delivers real, visible value.
+### Phase 5: Visualization Layer (Days 24–28)
+**Goal: Show that your data pipeline delivers real, visible value.**
 
- Choose BI tool: Power BI (cleaner for external use) or Streamlit (flexible, easier deploy)
+ - Choose BI tool: Power BI (cleaner for external use) or Streamlit (flexible, easier deploy)
 
- Build at least 1 or 2 simple dashboards:
+ - Build at least 1 or 2 simple dashboards:
 
-Air quality trends by region
+    - Air quality trends by region
 
-% days above pollution threshold
+    - % days above pollution threshold
 
- Add screenshots and README with BI examples
+ - Add screenshots and README with BI examples
 
-🧼 Phase 6: Polish & Presentation (Days 29–35)
-Goal: Make it shine for portfolio and freelance interviews.
+### Phase 6: Define next objectives
 
- Refactor Airflow DAGs and Python scripts for clarity
+ - Improve code readability: Refactor Airflow DAGs and Python scripts to enhance maintainability and clarity
 
- Add full README with architecture, features, setup instructions
+ - Explore additional data sources: Integrate new datasets such as health metrics to enable deeper and more insightful visualizations
 
- Write short blog-style summary of lessons learned or key insights
-
- Push final version to GitHub
-
-Structure of the project:
-- historical ingestion DAG
-- NRT DAG
-- Transformation DAG: used to build Medallion Architecture
-- Data Quality DAG
+ - Evaluate scalability tools: Assess the use of Docker and Kafka to support higher scalability and system robustness.
