@@ -51,11 +51,13 @@
 
  - Set up project repo structure (src/, dags/, models/, utils/, etc.) ✅
 
- - Create Python virtual environment and requirements.txt
+ - Create Python virtual environment and requirements.txt ✅
 
+ - Connect to the API and get raw data from there
+
+ - Set up AWS S3 bucket (with raw/, processed/ folders) and ingest raw data
+ 
  - Create Airflow basic DAG structure
-
- - Set up AWS S3 bucket (with raw/, processed/ folders)
 
  - Create Snowflake schema structure for bronze/silver/gold layers
 
