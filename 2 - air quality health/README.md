@@ -53,7 +53,7 @@
 
  - Create Python virtual environment and requirements.txt ✅
 
- - Connect to the API and get raw data from there
+ - Connect to the API and get raw data from there ✅
 
  - Set up AWS S3 bucket (with raw/, processed/ folders) and ingest raw data
  

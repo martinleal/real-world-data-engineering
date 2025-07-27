@@ -21,8 +21,8 @@ A performance-optimized version of a fact table pipeline implemented in Snowflak
 - `fact_table_deprecated_version/` – legacy version with performance issues
 - `optimized_fact_table/` – modular version with ~70% performance improvement
 
-### 2. Air Quality Health Project (In Progress)
-A data engineering project that integrates air pollution metrics with health-related signals to generate region-level indicators for environmental risk monitoring and analysis.
+### 2. Air Quality Indicators (In Progress)
+A data engineering project that integrates air pollution metrics to generate region-level indicators for environmental risk monitoring and analysis.
 
 **Key highlights:**
 - Combines batch and streaming pipelines using public and near-real-time data sources.

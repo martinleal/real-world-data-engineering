@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from api_client import OpenAQClient
 from datetime import timedelta
 from utils import write_to_file, setup_logging

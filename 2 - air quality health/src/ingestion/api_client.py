@@ -1,5 +1,5 @@
 import logging
-from openaq import OpenAQ
+from openaq import OpenAQ # type: ignore
 import os
 from datetime import datetime
 
