@@ -30,3 +30,14 @@ A data engineering project that integrates air pollution metrics to generate reg
 - Loads historical data from a public AWS Open Data S3 bucket.
 - Applies Medallion Architecture and Star Schema modeling for scalable, analytics-ready datasets.
 - Implements data quality checks and orchestration through Airflow for reliability and observability.
+
+### 3. IaC - Infrastructure as Code (In Progess)
+A dedicated section for **cloud infrastructure configuration** to support the projects in this repository.  
+
+**Structure and goals:**
+- `iac/air-quality/` – AWS resources for the Air Quality Health Project (e.g., S3 buckets, IAM roles, API Gateway, Lambda, Snowflake integrations).
+- `iac/shared/` – reusable modules for common resources like networking, logging, and security.
+- Modular and environment-based design to follow best practices for scalability and maintainability.
+- Will be built with **Terraform** to keep infra consistent, version-controlled, and portable.
+
+This IaC layer will ensure any pipeline or project in the repo can be deployed reproducibly, making it easier to share, test, and extend.
