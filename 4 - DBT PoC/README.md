@@ -1,4 +1,4 @@
-# dbt Flights Project ✈️
+# dbt Flights Project
 
 The goal of this project is to demonstrate a basic proof of concept (PoC) using **DBT Core for data modeling, testing, and documentation**. In the near future, I plan to develop more complex, production-level techniques as part of my Air Quality Indicators project.
 
