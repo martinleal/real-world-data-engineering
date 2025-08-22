@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: dim_airports
+    description: "Dimension table containing unique airports."
+    columns:
+      - name: airport_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_time
+    description: "Dimension table containing day-of-week and hour-of-day attributes."
+
+  - name: fact_flights
+    description: "Fact table containing flight-level metrics."
+    columns:
+      - name: flight_num
+        tests:
+          - not_null

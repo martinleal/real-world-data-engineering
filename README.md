@@ -28,7 +28,7 @@ A data engineering project that integrates air pollution metrics to generate reg
 - Combines batch and streaming pipelines using public and near-real-time data sources.
 - Ingests near-real-time API data, writes to S3, and loads into Snowflake using Snowpipe.
 - Loads historical data from a public AWS Open Data S3 bucket.
-- Applies Medallion Architecture and Star Schema modeling for scalable, analytics-ready datasets.
+- Applies Medallion Architecture and Star Schema modeling for scalable, analytics-ready datasets using `DBT`.
 - Implements data quality checks and orchestration through Airflow for reliability and observability.
 
 ### 3. IaC - Infrastructure as Code (In Progess)
@@ -41,3 +41,5 @@ Key highlights:
 - Implements environment separation (dev, prod) with remote Terraform state.
 
 - Uses *least-privilege IAM practices*, code-driven resource creation, and reusable modules.
+
+### 4. DBT PoC

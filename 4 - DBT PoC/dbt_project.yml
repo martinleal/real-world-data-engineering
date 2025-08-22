@@ -1,0 +1,16 @@
+name: 'dbt_flights'
+version: '1.0'
+config-version: 2
+
+profile: 'default'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+models:
+  dbt_flights:
+    staging:
+      +materialized: view
+    core:
+      +materialized: table
