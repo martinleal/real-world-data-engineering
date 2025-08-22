@@ -32,12 +32,12 @@ A data engineering project that integrates air pollution metrics to generate reg
 - Implements data quality checks and orchestration through Airflow for reliability and observability.
 
 ### 3. IaC - Infrastructure as Code (In Progess)
-A dedicated section for **cloud infrastructure configuration** to support the projects in this repository.  
+This section defines a modular, production-grade **AWS infrastructure** using Terraform to support the Air Quality pipeline and similar data projects.
 
-**Structure and goals:**
-- `iac/air-quality/` – AWS resources for the Air Quality Health Project (e.g., S3 buckets, IAM roles, API Gateway, Lambda, Snowflake integrations).
-- `iac/shared/` – reusable modules for common resources like networking, logging, and security.
-- Modular and environment-based design to follow best practices for scalability and maintainability.
-- Will be built with **Terraform** to keep infra consistent, version-controlled, and portable.
+Key highlights:
 
-This IaC layer will ensure any pipeline or project in the repo can be deployed reproducibly, making it easier to share, test, and extend.
+- Follows a *modular architecture* for S3, IAM, Lambda, Airflow (MWAA), and networking.
+
+- Implements environment separation (dev, prod) with remote Terraform state.
+
+- Uses *least-privilege IAM practices*, code-driven resource creation, and reusable modules.

@@ -1,0 +1,48 @@
+# ─────────────────────────────
+# Terraform
+# ─────────────────────────────
+# Local Terraform working dir
+**/.terraform/*
+
+# State files (never commit!)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Override files (local use only)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Backend config (use .example instead)
+backend.tf
+
+# Provider lock file (optional to commit if you want reproducible builds)
+.terraform.lock.hcl
+
+# ─────────────────────────────
+# IDE / Editor junk
+# ─────────────────────────────
+# VS Code
+.vscode/
+# IntelliJ / PyCharm
+.idea/
+# Vim swap files
+*.swp
+*.swo
+# MacOS
+.DS_Store
+
+# ─────────────────────────────
+# Local outputs / misc
+# ─────────────────────────────
+# Sometimes people create local debug outputs
+local.tf
