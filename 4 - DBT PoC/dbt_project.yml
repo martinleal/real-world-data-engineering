@@ -1,16 +1,31 @@
 name: 'dbt_flights'
-version: '1.0'
-config-version: 2
 
-profile: 'default'
-
-model-paths: ["models"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
+version: 1
 
 models:
-  dbt_flights:
-    staging:
-      +materialized: view
-    core:
-      +materialized: table
+  - name: stg_flights
+    description: Staging model that cleans and standardizes raw flight data.
+
+  - name: dim_airports
+    description: Dimension table containing unique airports.
+
+  - name: dim_time
+    description: Dimension table containing day-of-week and hour-of-day attributes.
+
+  - name: fct_flights
+    description: Fact table with flight indicators
+    columns:
+      - name: flight_num
+        description: unique identifier of the flight
+        tests:
+          - unique
+
+      - name: dest_airport_id
+        description: identifier of the destination airport
+        tests:
+            - not_null
+
+      - name: origin_airport_id
+        description: identifier of the origin airport
+        tests:
+            - not_null

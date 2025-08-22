@@ -42,5 +42,5 @@ Key highlights:
 
 - Uses *least-privilege IAM practices*, code-driven resource creation, and reusable modules.
 
-### 4. DBT PoC (In Progress)
+### 4. DBT PoC 
 Simple DBT Core project demonstrating staging, dimensional modeling, and testing using publicly available flight data.
