@@ -11,9 +11,3 @@ The goal of this project is to demonstrate a basic proof of concept (PoC) using 
    - `fact_flights`: fact table with metrics such as ticket price, delay minutes, and distance
 4. **Tests**: uniqueness and consistency constraints
 5. **Documentation**: schema.yml with descriptions
-
-## How to run
-```bash
-dbt seed
-dbt run
-dbt test
