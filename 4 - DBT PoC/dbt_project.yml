@@ -1,31 +1,19 @@
-name: 'dbt_flights'
+name: 'dbt_poc' 
+version: '1.0.0'
+config-version: 2
 
-version: 1
+profile: 'dbt_poc'
+
+model-paths: ["models"]
 
 models:
-  - name: stg_flights
-    description: Staging model that cleans and standardizes raw flight data.
+  dbt_poc:
+    +materialized: view
+    silver:
+      +materialized: incremental
+      +schema: silver_layer
+    gold:
+      +schema: gold_layer
 
-  - name: dim_airports
-    description: Dimension table containing unique airports.
-
-  - name: dim_time
-    description: Dimension table containing day-of-week and hour-of-day attributes.
-
-  - name: fct_flights
-    description: Fact table with flight indicators
-    columns:
-      - name: flight_num
-        description: unique identifier of the flight
-        tests:
-          - unique
-
-      - name: dest_airport_id
-        description: identifier of the destination airport
-        tests:
-            - not_null
-
-      - name: origin_airport_id
-        description: identifier of the origin airport
-        tests:
-            - not_null
+snapshots:
+  dbt_poc: snapshots

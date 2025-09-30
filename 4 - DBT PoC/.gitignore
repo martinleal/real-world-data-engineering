@@ -10,3 +10,9 @@ __pycache__/
 
 # Ignore environment variables definition
 .env
+
+# DBT logs
+logs/
+
+# DBT target
+target/

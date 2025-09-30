@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: dim_airport
+    description: "SCD Type 2 with information data ready for consumption."

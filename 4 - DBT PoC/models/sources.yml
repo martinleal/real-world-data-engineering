@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: bronze_layer
+    schema: bronze_layer
+    tables:
+      - name: raw_flights
+        description: "Raw ingested flights data."

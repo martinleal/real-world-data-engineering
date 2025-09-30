@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: silver_flights
+    description: "Cleaned flight data with proper column types for analytics."
