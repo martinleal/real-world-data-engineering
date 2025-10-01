@@ -30,13 +30,11 @@ SELECT
     CANCELLED::BOOLEAN AS is_cancelled,
     REPLACE(DISTANCEKILOMETERS, ',', '')::FLOAT AS distance_km,
     REPLACE(DISTANCEMILES, ',', '')::FLOAT AS distance_miles,
-    FLIGHTDELAY::BOOLEAN AS flight_delay,
+    FLIGHTDELAY::BOOLEAN AS is_flight_delayed,
     FLIGHTDELAYMIN::INTEGER AS flight_delay_min,
     FLIGHTDELAYTYPE AS flight_delay_type,
     FLIGHTTIMEHOUR::FLOAT AS flight_time_hours,
-    REPLACE(FLIGHTTIMEMIN, ',', '')::FLOAT AS flight_time_minutes,
-    DAYOFWEEK AS day_of_week,
-    HOUR_OF_DAY AS hour_of_day
+    REPLACE(FLIGHTTIMEMIN, ',', '')::FLOAT AS flight_time_minutes
 FROM {{ source('bronze_layer', 'raw_flights') }}
 
 {% if is_incremental() %}

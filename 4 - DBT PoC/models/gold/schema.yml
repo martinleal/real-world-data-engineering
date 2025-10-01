@@ -3,3 +3,64 @@ version: 2
 models:
   - name: dim_airport
     description: "SCD Type 2 with information data ready for consumption."
+    columns:
+      - name: airport_id
+        description: "Unique identifier for the airport."
+      - name: airport_name
+        description: "Name of the airport."
+      - name: city
+        description: "City where the airport is located."
+      - name: region
+        description: "Region where the airport is located."
+      - name: country
+        description: "Country where the airport is located."
+      - name: latitude
+        description: "Latitude of the airport."
+      - name: longitude
+        description: "Longitude of the airport."
+      - name: valid_from
+        description: "Start timestamp for the SCD Type 2 record."
+      - name: valid_to
+        description: "End timestamp for the SCD Type 2 record."
+
+  - name: dim_weather
+    description: "SCD Type 1 dimension table for weather descriptions."
+    columns:
+      - name: weather_description
+        description: "Weather observation at the airport."
+
+  - name: dim_city
+    description: "SCD Type 1 dimension table for city information."
+    columns:
+      - name: city
+        description: "City name."
+      - name: region
+        description: "Region name."
+      - name: country
+        description: "Country name."
+
+  - name: dim_region
+    description: "SCD Type 1 dimension table for region information."
+    columns:
+      - name: region_id
+        description: "Unique identifier for the region."
+      - name: region
+        description: "Region name."
+      - name: country
+        description: "Country name."
+
+  - name: dim_country
+    description: "SCD Type 1 dimension table for country information."
+    columns:
+      - name: country_id
+        description: "Unique identifier for the country."
+      - name: country
+        description: "Country name."
+
+  - name: dim_flight_delay_type
+    description: "SCD Type 1 dimension table for flight delay types."
+    columns:
+      - name: flight_delay_type_id
+        description: "Unique identifier for the flight delay type."
+      - name: flight_delay_type_description
+        description: "Description of the flight delay type."

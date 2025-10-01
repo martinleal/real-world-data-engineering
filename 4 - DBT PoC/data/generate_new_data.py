@@ -51,9 +51,9 @@ def generate_increment(
 # Example usage:
 if __name__ == "__main__":
     generate_increment(
-        start_date="2025-01-01 00:00:00",
-        end_date="2025-01-01 23:59:59",
-        n_rows=100,
+        start_date="2025-01-02 00:00:00",
+        end_date="2025-01-02 23:59:59",
+        n_rows=120,
         source_csv="source/flights.csv",
         output_dir="data_to_load",
         seed=2
