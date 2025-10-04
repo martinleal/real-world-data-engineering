@@ -3,3 +3,62 @@ version: 2
 models:
   - name: silver_flights
     description: "Cleaned flight data with proper column types for analytics."
+    columns:
+      - name: flight_id
+        description: "Unique identifier for the flight (hash of flight number and departure timestamp)."
+      - name: flight_number
+        description: "Carrier flight number."
+        tests:
+          - not_null
+      - name: departure_timestamp
+        description: "Timestamp of departure."
+        tests:
+          - not_null
+      - name: origin_airport_name
+        description: "Name of the origin airport."
+      - name: origin_airport_id
+        description: "Code of the origin airport."
+      - name: origin_city
+        description: "Origin city name."
+      - name: origin_country
+        description: "Origin country name."
+      - name: origin_latitude
+        description: "Latitude of the origin airport."
+      - name: origin_longitude
+        description: "Longitude of the origin airport."
+      - name: origin_weather
+        description: "Weather description at origin."
+      - name: dest_airport_name
+        description: "Name of the destination airport."
+      - name: dest_airport_id
+        description: "Code of the destination airport."
+      - name: dest_city
+        description: "Destination city name."
+      - name: dest_country
+        description: "Destination country name."
+      - name: dest_latitude
+        description: "Latitude of the destination airport."
+      - name: dest_longitude
+        description: "Longitude of the destination airport."
+      - name: dest_weather
+        description: "Weather description at destination."
+      - name: avg_ticket_price
+        description: "Average ticket price (numeric)."
+      - name: currency
+        description: "Currency symbol for the ticket price."
+      - name: is_cancelled
+        description: "Whether the flight was cancelled (boolean)."
+      - name: distance_km
+        description: "Distance in kilometers."
+      - name: distance_miles
+        description: "Distance in miles."
+      - name: is_flight_delayed
+        description: "Whether the flight was delayed (boolean)."
+      - name: flight_delay_min
+        description: "Delay in minutes."
+      - name: flight_delay_type
+        description: "Type of flight delay."
+      - name: flight_time_hours
+        description: "Scheduled flight time in hours."
+      - name: flight_time_minutes
+        description: "Scheduled flight time in minutes."

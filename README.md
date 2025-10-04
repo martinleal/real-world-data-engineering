@@ -43,14 +43,12 @@ Key highlights:
 - Uses *least-privilege IAM practices*, code-driven resource creation, and reusable modules.
 
 ### 4. DBT PoC 
-DBT project demonstrating staging, dimensional modeling, and testing using publicly available flight data.
+DBT project demonstrating dimensional modeling, and testing flight data.
 
 - Star schema modeling
 
 - Implementation of Slowly Changing Dimensions of types 1 and 2
 
-- Analytics-ready consumption views
+- Analytics-ready consumption tables and views
 
-- Data quality and business rule test
-
-- Row-level security over consumption views
+- Data quality and business rules tests

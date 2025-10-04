@@ -6,6 +6,10 @@ models:
     columns:
       - name: airport_id
         description: "Unique identifier for the airport."
+      - name: airport_code
+        description: "Airport code."
+        tests:
+          - not_null
       - name: airport_name
         description: "Name of the airport."
       - name: city
@@ -20,8 +24,16 @@ models:
         description: "Longitude of the airport."
       - name: valid_from
         description: "Start timestamp for the SCD Type 2 record."
+        tests:
+          - not_null
       - name: valid_to
         description: "End timestamp for the SCD Type 2 record."
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "valid_from < valid_to"
 
   - name: dim_weather
     description: "SCD Type 1 dimension table for weather descriptions."
@@ -32,18 +44,13 @@ models:
   - name: dim_city
     description: "SCD Type 1 dimension table for city information."
     columns:
+      - name: city_id
+        description: "Unique identifier for the city."
       - name: city
         description: "City name."
-      - name: region
-        description: "Region name."
-      - name: country
-        description: "Country name."
-
-  - name: dim_region
-    description: "SCD Type 1 dimension table for region information."
-    columns:
-      - name: region_id
-        description: "Unique identifier for the region."
+        tests:
+          - unique
+          - not_null
       - name: region
         description: "Region name."
       - name: country
@@ -56,6 +63,9 @@ models:
         description: "Unique identifier for the country."
       - name: country
         description: "Country name."
+        tests:
+          - unique
+          - not_null
 
   - name: dim_flight_delay_type
     description: "SCD Type 1 dimension table for flight delay types."
@@ -64,3 +74,118 @@ models:
         description: "Unique identifier for the flight delay type."
       - name: flight_delay_type_description
         description: "Description of the flight delay type."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_currency
+    description: "SCD Type 1 dimension table for currencies."
+    columns:
+      - name: currency_id
+        description: "Unique identifier for the currency."
+      - name: currency
+        description: "Currency symbol."
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_flights
+    description: "Fact table of flights with measures and foreign keys to dimensions."
+    columns:
+      - name: flight_id
+        description: "Unique identifier for the flight (surrogate/primary key)."
+        tests:
+          - unique
+          - not_null
+      - name: flight_number
+        description: "Carrier flight number."
+      - name: departure_timestamp
+        description: "Timestamp of departure."
+        tests:
+          - not_null
+      - name: avg_ticket_price
+        description: "Average ticket price for the flight."
+      - name: distance_km
+        description: "Distance in kilometers."
+      - name: distance_miles
+        description: "Distance in miles."
+      - name: is_cancelled
+        description: "Whether the flight was cancelled (boolean)."
+      - name: is_flight_delayed
+        description: "Whether the flight experienced a delay."
+      - name: flight_delay_min
+        description: "Delay in minutes."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+      - name: flight_time_hours
+        description: "Flight time in hours."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+      - name: flight_time_minutes
+        description: "Flight time in minutes."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+      - name: origin_airport_id
+        description: "Foreign key to `dim_airport.airport_id` for origin."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_airport')
+                field: airport_id
+      - name: destination_airport_id
+        description: "Foreign key to `dim_airport.airport_id` for destination."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_airport')
+                field: airport_id
+      - name: origin_city_id
+        description: "Foreign key to `dim_city.city_id` for origin city."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_id
+      - name: destination_city_id
+        description: "Foreign key to `dim_city.city_id` for destination city."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_id
+      - name: origin_country_id
+        description: "Foreign key to `dim_country.country_id` for origin country."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_id
+      - name: destination_country_id
+        description: "Foreign key to `dim_country.country_id` for destination country."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_id
+      - name: flight_delay_type_id
+        description: "Foreign key to `dim_flight_delay_type.flight_delay_type_id`."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_flight_delay_type')
+                field: flight_delay_type_id
+      - name: currency_id
+        description: "Foreign key to `dim_currency.currency_id`."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_currency')
+                field: currency_id

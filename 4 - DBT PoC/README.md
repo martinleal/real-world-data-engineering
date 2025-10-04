@@ -1,60 +1,79 @@
-# dbt Flights Project
+# DBT Flights PoC
 
-This project is a **proof of concept (PoC)** demonstrating how to use **dbt** with Snowflake for data modeling, testing, and documentation.  
-The dataset simulates an airline scenario with incremental flight data arriving over time.  
+This is a **proof of concept (PoC)** project demonstrating **dbt** for building a data warehouse with Snowflake. It processes flight data into a star schema, using incremental loads, Slowly Changing Dimensions (SCD), and comprehensive data quality checks.
 
----
+## Overview
 
-## Pipeline Overview
+The pipeline transforms raw flight data into analytics-ready tables:
+- **Bronze Layer**: Raw data from Snowflake external stage.
+- **Silver Layer**: Cleaned and standardized staging data.
+- **Gold Layer**: Dimensional model (star schema) with facts and dimensions.
 
-1. **Source data**  
-   - `flights.csv`: base dataset with flight details (downloaded from a public source).  
+## Architecture
 
-2. **Python preprocessing scripts** (simulate new data arriving):  
-   - `add_timestamp_column.py`: adds a random `departure_timestamp` column to the base dataset.  
-   - `generate_new_data.py`: generates a new CSV with a user-defined number of rows, randomly sampled from the base dataset, and assigns new random departure timestamps between a chosen start and end date. This simulates **incremental data arrivals**.  
+### Data Flow
+1. **Source**: Flight data loaded into Snowflake via external stage (`bronze_layer.raw_flights`).
+2. **Silver**: `silver_flights` model cleans and types data, handles incremental updates.
+3. **Gold**:
+   - Dimensions: `dim_airport` (SCD2), `dim_city`, `dim_country`, `dim_flight_delay_type`, `dim_currency`, `dim_weather`.
+   - Fact: `fact_flights` (incremental, joins to dimensions).
+4. **Snapshots**: `airport_snapshot` for SCD2 history.
+5. **Tests**: Custom SQL tests for consistency, freshness, and schema validations.
 
-   > All generated files are stored in the `data_to_load/` folder, which is configured as a **Snowflake external stage** for loading into the warehouse.
+### Key Technologies
+- **dbt**: For transformations, tests, and docs.
+- **Snowflake**: Data warehouse.
+- **Incremental Models**: Avoid reprocessing all data.
+- **SCD Type 2**: Track changes in airport data over time.
+- **Data Quality**: Uniqueness, null checks, relationships, freshness, and custom validations.
 
-3. **Staging models**  
-   - Clean and standardize raw fields from the CSVs.  
 
-4. **Core models**  
-   - `dim_airports`: unique list of airports.  
-   - `dim_time`: derived calendar/time fields.  
-   - `fact_flights`: fact table with metrics such as ticket price, delay minutes, and distance.  
+## Setup
+1. Clone the repo and navigate to the project folder.
+2. Install dependencies: `pip install -r requirements.txt`
+3. Configure dbt profile in `~/.dbt/profiles.yml` or via environment variables.
+4. Run `dbt deps` to install packages (e.g., dbt_utils).
+5. Load initial data into Snowflake external stage.
 
-5. **Tests**  
-   - Uniqueness, non-null, and referential integrity checks to ensure data quality.  
+## How to Run
+1. **Build the silver model**: `dbt run --select silver_flights` (model with cleaned data).
+2. **Run snapshots**: `dbt snapshot` (for SCD updates).
+3. **Build the gold layer**: `dbt run --select gold`(analytics-ready star schema model).
+3. **Test data quality**: `dbt test` (runs all tests).
+4. **Generate docs**: `dbt docs generate && dbt docs serve` (view lineage and descriptions).
 
-6. **Documentation**  
-   - `schema.yml` contains descriptions of datasets and columns for dbt Docs.  
-
----
-
-## Key Features
-
-- **Incremental ingestion** of flight data via generated CSVs.  
-- **Star schema** modeling with dimensions and fact tables.  
-- **Data quality tests** built into dbt.  
-- **Documentation** using dbt’s native tools.  
-
----
+## Key Commands
+- `dbt run --select silver_flights --full-refresh`: Rebuild staging.
+- `dbt run --select gold --full-refresh`: Rebuild core models.
+- `dbt test --select fact_flights`: Test fact integrity.
+- `dbt docs serve`: View documentation.
 
 ## Folder Structure
-
-├── data/ # Original source data (static CSVs)
-
-├── data_to_load/ # Generated CSVs with timestamps (incremental data)
-
+```
+├── data/                          # Static source data
+├── data_to_load/                  # Generated incremental CSVs
 ├── models/
+│   ├── silver/                    # Staging layer
+│   │   ├── silver_flights.sql     # Incremental cleaning
+│   │   └── schema.yml             # Docs and tests
+│   └── gold/                      # Core layer
+│       ├── dim_*.sql              # Dimension models
+│       ├── fact_flights.sql       # Fact model
+│       └── schema.yml             # Docs and tests
+├── snapshots/                     # SCD snapshots
+│   └── airport_snapshot.sql
+├── tests/                         # Custom data tests
+│   ├── flights_consistency.sql    # Source vs. fact check
+│   ├── test_freshness.sql         # Data recency
+│   └── test_dim_airport_scd2_no_overlaps.sql  # SCD validation
+├── packages.yml                   # dbt packages (dbt_utils)
+├── dbt_project.yml                # Project config
+└── README.md
+```
 
-│ ├── staging/ # Staging models
+## Notes
+- Incremental models use `unique_key` for merges.
+- Tests include relationships, expressions, and custom SQL.
+- For production, add CI/CD with dbt Cloud or GitHub Actions.
 
-│ └── core/ # Dimensional and fact models
-
-├── add_timestamp_column.py
-
-├── generate_new_data.py
-
-└── schema.yml
+This PoC showcases dbt's power for scalable, testable data pipelines.

@@ -11,8 +11,8 @@ __pycache__/
 # Ignore environment variables definition
 .env
 
-# DBT logs
+# DBT specific
 logs/
-
-# DBT target
 target/
+package-lock.yml
+dbt_packages/
