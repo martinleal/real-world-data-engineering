@@ -16,3 +16,4 @@ logs/
 target/
 package-lock.yml
 dbt_packages/
+packages.yml

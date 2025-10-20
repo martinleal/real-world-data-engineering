@@ -20,14 +20,6 @@ The pipeline transforms raw flight data into analytics-ready tables:
 4. **Snapshots**: `airport_snapshot` for SCD2 history.
 5. **Tests**: Custom SQL tests for consistency, freshness, and schema validations.
 
-### Key Technologies
-- **dbt**: For transformations, tests, and docs.
-- **Snowflake**: Data warehouse.
-- **Incremental Models**: Avoid reprocessing all data.
-- **SCD Type 2**: Track changes in airport data over time.
-- **Data Quality**: Uniqueness, null checks, relationships, freshness, and custom validations.
-
-
 ## Setup
 1. Clone the repo and navigate to the project folder.
 2. Install dependencies: `pip install -r requirements.txt`
@@ -41,12 +33,6 @@ The pipeline transforms raw flight data into analytics-ready tables:
 3. **Build the gold layer**: `dbt run --select gold`(analytics-ready star schema model).
 3. **Test data quality**: `dbt test` (runs all tests).
 4. **Generate docs**: `dbt docs generate && dbt docs serve` (view lineage and descriptions).
-
-## Key Commands
-- `dbt run --select silver_flights --full-refresh`: Rebuild staging.
-- `dbt run --select gold --full-refresh`: Rebuild core models.
-- `dbt test --select fact_flights`: Test fact integrity.
-- `dbt docs serve`: View documentation.
 
 ## Folder Structure
 ```
@@ -70,10 +56,3 @@ The pipeline transforms raw flight data into analytics-ready tables:
 ├── dbt_project.yml                # Project config
 └── README.md
 ```
-
-## Notes
-- Incremental models use `unique_key` for merges.
-- Tests include relationships, expressions, and custom SQL.
-- For production, add CI/CD with dbt Cloud or GitHub Actions.
-
-This PoC showcases dbt's power for scalable, testable data pipelines.
