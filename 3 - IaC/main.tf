@@ -24,3 +24,22 @@ module "iam" {
   data_bucket_arn = module.s3.data_bucket_arn
   mwaa_environment_name = "air-quality-indicators-mwaa-dev"
 }
+
+# Lambda ingestion function (fetch data from API and write to data bucket)
+module "ingestion_lambda" {
+  source              = "./modules/lambda"
+  project             = "air-quality-indicators"
+  environment         = "dev"
+  function_name       = "ingestion"
+  handler             = "app.handler"
+  source_path         = "../2 - air quality indicators/src/ingestion/lambda_ingestion"
+  data_bucket_name    = module.s3.data_bucket_name
+  attach_logs_policy  = false   # Desactivado según tu preferencia (sin logs CloudWatch)
+
+  environment_variables = {
+    API_BASE_URL = "https://api.openaq.org/v2"
+    STAGE        = "dev"
+    DATA_BUCKET  = module.s3.data_bucket_name
+  }
+  secrets_arns = []
+}
