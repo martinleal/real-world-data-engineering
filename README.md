@@ -6,6 +6,18 @@ Each example reflects optimizations, design patterns, and engineering decisions 
 
 The goal is to share reusable ideas, not just code, including performance improvements, modular design, and data warehousing best practices.
 
+## Repository Layout
+```
+root/
+├─ 1 - optimized fact table pipeline/
+├─ 2 - air quality indicators/
+├─ 3 - IaC/
+├─ 4 - DBT PoC/
+├─ .github/              # CI/CD workflows & automation (global, not a data project)
+├─ README.md
+└─ LICENSE
+```
+
 ## Contents
 
 ### 1. Optimized Fact Table Pipeline
@@ -52,3 +64,21 @@ DBT project demonstrating dimensional modeling, and testing flight data.
 - Analytics-ready consumption tables and views
 
 - Data quality and business rules tests
+
+## CI/CD & Automation
+Overview of how automation works in this repo:
+
+- Terraform provisions the core AWS modules (S3 buckets, IAM roles, Lambda function, optionally MWAA).
+- A GitHub Actions workflow (`.github/workflows/dags-deploy.yml`) syncs DAG files in `2 - air quality indicators/dags/` to the MWAA DAGs S3 bucket whenever they change.
+- Airflow (MWAA) triggers the ingestion Lambda, which fetches API data and writes JSON objects to the data S3 bucket.
+
+This setup is intentionally minimal: it shows data engineering flow (ingest → store → orchestrate → model) without a heavy DevOps layer. Additional pipelines, environments, or artifact promotion can be added later without changing the core structure.
+
+Architecture (high-level):
+```
+API -> Lambda (ingest) -> S3 (raw) -> Airflow DAG triggers ingest
+S3 -> Snowflake (staging) -> dbt models (silver/gold) -> analytics
+```
+
+## License
+See `LICENSE`.

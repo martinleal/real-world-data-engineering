@@ -128,3 +128,63 @@ resource "aws_iam_policy" "mwaa_core_access" {
     ]
   })
 }
+
+resource "aws_iam_policy" "pipeline_admin_policy" {
+  name        = "${var.project}-${var.environment}-pipeline-admin"
+  description = "Broad deploy permissions for CI/CD pipelines (use with caution)"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ],
+        Resource = [
+          var.dags_bucket_arn,
+          "${var.dags_bucket_arn}/*",
+          var.logs_bucket_arn,
+          "${var.logs_bucket_arn}/*",
+          var.data_bucket_arn,
+          "${var.data_bucket_arn}/*"
+        ]
+      },
+
+      {
+        Effect = "Allow",
+        Action = [
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:CreateFunction",
+          "lambda:DeleteFunction",
+          "lambda:InvokeFunction"
+        ],
+        Resource = "*"
+      },
+
+      {
+        Effect = "Allow",
+        Action = [
+          "airflow:CreateCliToken",
+          "airflow:PublishMetrics"
+        ],
+        Resource = "*"
+      },
+
+      {
+        Effect = "Allow",
+        Action = [
+          "iam:GetRole",
+          "iam:PassRole",
+          "sts:AssumeRole"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}

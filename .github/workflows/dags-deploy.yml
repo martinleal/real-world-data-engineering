@@ -1,0 +1,50 @@
+name: Deploy Airflow DAGs
+
+on:
+  push:
+    paths:
+      - '2 - air quality indicators/dags/**'
+      - '.github/workflows/dags-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-dags:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # for OIDC role assumption
+      contents: read
+    env:
+      DAGS_PATH: '2 - air quality indicators/dags'
+      # Read bucket name from GitHub Actions secret
+      DAGS_BUCKET: '${{ secrets.DAGS_BUCKET }}'
+      AWS_REGION: 'us-west-2'
+      # Optional: prefix inside bucket (leave empty for root /dags)
+      DAGS_PREFIX: 'dags'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for basic syntax check)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Basic DAG syntax validation (compileall)
+        run: |
+          python -m compileall "$DAGS_PATH" || exit 1
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: '${{ secrets.PIPELINE_ROLE_ARN }}'
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload DAGs to S3
+        run: |
+          aws s3 sync "$DAGS_PATH/" "s3://$DAGS_BUCKET/$DAGS_PREFIX/" --delete
+
+      - name: List uploaded objects (debug)
+        run: aws s3 ls "s3://$DAGS_BUCKET/$DAGS_PREFIX/"
+
+      - name: Summary
+        run: echo "DAGs deployed to s3://$DAGS_BUCKET/$DAGS_PREFIX/"

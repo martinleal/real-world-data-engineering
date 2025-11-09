@@ -13,3 +13,13 @@ output "mwaa_s3_policy_arn" {
   value       = aws_iam_policy.mwaa_s3_access.arn
 }
 
+output "pipeline_admin_role_arn" {
+  description = "ARN of the pipeline-admin IAM role for CI/CD"
+  value       = aws_iam_role.pipeline_admin_role.arn
+}
+
+output "pipeline_admin_policy_arn" {
+  description = "ARN of the pipeline admin policy"
+  value       = aws_iam_policy.pipeline_admin_policy.arn
+}
+

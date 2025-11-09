@@ -42,3 +42,13 @@ output "mwaa_s3_policy_arn" {
   description = "ARN of custom IAM policy granting MWAA access to S3 buckets"
   value       = module.iam.mwaa_s3_policy_arn
 }
+
+output "pipeline_admin_role_arn" {
+  description = "ARN of the pipeline-admin IAM role for CI/CD"
+  value       = module.iam.pipeline_admin_role_arn
+}
+
+output "pipeline_admin_policy_arn" {
+  description = "ARN of the pipeline admin policy"
+  value       = module.iam.pipeline_admin_policy_arn
+}
